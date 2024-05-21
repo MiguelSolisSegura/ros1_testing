@@ -8,6 +8,7 @@ from geometry_msgs.msg import Point
 from nav_msgs.msg import Odometry
 from tortoisebot_waypoints.msg import WaypointActionAction, WaypointActionGoal
 import math
+import os
 from tf import transformations
 
 class TestWaypointAction(unittest.TestCase):
@@ -17,9 +18,12 @@ class TestWaypointAction(unittest.TestCase):
         self.odom_data = None
         rospy.Subscriber('/odom', Odometry, self.odom_callback)
         self.rate = rospy.Rate(1)
-        #self.goal_position = Point(x=0.25, y=0.5, z=0.0)
-        #self.goal_position = Point(x=0.0, y=0.0, z=0.0)
-        self.goal_position = Point(x=100.0, y=0.0, z=0.0)
+
+        # Read goal position from environment variables
+        goal_x = float(os.getenv('GOAL_X', 0.25))
+        goal_y = float(os.getenv('GOAL_Y', 0.5))
+
+        self.goal_position = Point(x=goal_x, y=goal_y, z=0.0)
         self.goal_yaw = math.atan2(self.goal_position.y, self.goal_position.x)
 
         # Create action client
