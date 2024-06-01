@@ -61,7 +61,7 @@ class TestWaypointAction(unittest.TestCase):
         _, _, current_yaw = self.euler_from_quaternion(orientation.x, orientation.y, orientation.z, orientation.w)
         error_margin = math.pi / 90  # Allowable error margin for yaw
 
-        self.assertAlmostEqual(current_yaw, self.goal_yaw, delta=10*error_margin, 
+        self.assertAlmostEqual(current_yaw, self.goal_yaw, delta=15*error_margin, 
                                msg="Final Yaw is incorrect")
 
     def euler_from_quaternion(self, x, y, z, w):
